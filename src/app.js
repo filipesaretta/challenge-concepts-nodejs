@@ -46,10 +46,6 @@ app.put('/repositories/:id', (request, response) => {
 
   const repoIndex = repositories.findIndex((repos) => repos.id === id);
 
-  if (repoIndex < 0) {
-    return response.status(400).json({ Error: 'Something could not be found' });
-  }
-
   const repository = {
     id,
     title,
@@ -67,10 +63,6 @@ app.delete('/repositories/:id', (request, response) => {
   const { id } = request.params;
 
   const repoIndex = repositories.findIndex((repos) => repos.id === id);
-
-  if (repoIndex < 0) {
-    return response.status(400).json({ Error: 'Something could not be found' });
-  }
 
   repositories.splice(repoIndex, 1);
 
