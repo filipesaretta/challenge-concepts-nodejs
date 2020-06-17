@@ -77,8 +77,14 @@ app.delete('/repositories/:id', (request, response) => {
   return response.status(204).send();
 });
 
-app.post("/repositories/:id/like", (request, response) => {
-  // TODO
+app.post('/repositories/:id/like', (request, response) => {
+  const { id } = request.params;
+
+  const repoIndex = repositories.findIndex((repos) => repos.id === id);
+
+  repositories[repoIndex].likes += 1;
+
+  return response.json(repositories[repoIndex]);
 });
 
 module.exports = app;
