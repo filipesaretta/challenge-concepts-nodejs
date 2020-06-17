@@ -28,16 +28,41 @@ app.post('/repositories', (request, response) => {
   return response.json(repository);
 });
 
-app.post("/repositories", (request, response) => {
-  // TODO
+app.put('/repositories/:id', (request, response) => {
+  const { id } = request.params;
+  const { title, url, techs } = request.body;
+
+  const repoIndex = repositories.findIndex((repos) => repos.id === id);
+
+  if (repoIndex < 0) {
+    return response.status(400).json({ Error: 'Something could not be found' });
+  }
+
+  const repository = {
+    id,
+    title,
+    techs,
+    url,
+    likes: 0,
+  };
+
+  repositories[repoIndex] = repository;
+
+  return response.json(repository);
 });
 
-app.put("/repositories/:id", (request, response) => {
-  // TODO
-});
+app.delete('/repositories/:id', (request, response) => {
+  const { id } = request.params;
 
-app.delete("/repositories/:id", (request, response) => {
-  // TODO
+  const repoIndex = repositories.findIndex((repos) => repos.id === id);
+
+  if (repoIndex < 0) {
+    return response.status(400).json({ Error: 'Something could not be found' });
+  }
+
+  repositories.splice(repoIndex, 1);
+
+  return response.status(204).send();
 });
 
 app.post("/repositories/:id/like", (request, response) => {
